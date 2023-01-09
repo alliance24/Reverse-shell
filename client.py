@@ -9,11 +9,11 @@ MAX_DATA_SIZE = 1024
 
 # --------------- Fonctions ---------------
 def send(data):
-    s.sendall(data.encode(encoding='UTF-8'))
+    s.sendall(data.encode('ascii', errors='ignore'))
     
 def listen():
     data_recues = s.recv(MAX_DATA_SIZE)
-    return data_recues.decode(encoding='UTF-8')
+    return data_recues.decode('ascii', errors='ignore')
 
 def shell_client():
 	while True:

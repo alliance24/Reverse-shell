@@ -6,11 +6,11 @@ MAX_DATA_SIZE = 1024
 
 # --------------- Fonctions ---------------
 def send(data):
-    connection_socket.sendall(data.encode(encoding='UTF-8'))
+    connection_socket.sendall(data.encode('ascii', errors='ignore'))
     
 def listen():
     data_recues = connection_socket.recv(MAX_DATA_SIZE)
-    return data_recues.decode(encoding='UTF-8')
+    return data_recues.decode('ascii', errors='ignore')
     
 def shell_serveur():
     while True:
