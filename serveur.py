@@ -1,7 +1,7 @@
 import socket
 
 # -------------- Constantes --------------
-HOST_IP = "127.0.0.1"
+HOST_IP = "192.168.1.19"
 HOST_PORT = 3500
 MAX_DATA_SIZE = 4000
 
