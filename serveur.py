@@ -2,7 +2,7 @@ import socket
 
 HOST_IP = "127.0.0.1"
 HOST_PORT = 3500
-MAX_DATA_SIZE = 1024
+MAX_DATA_SIZE = 4000
 
 # --------------- Fonctions ---------------
 def send(data):
@@ -38,9 +38,18 @@ print(f"Connexion établie avec {client_adress}")
 
 while True:
 	command = input("Commande: ")
+	command_split = command.split(" ")
+
+	
+	if command == "":
+		continue
 	if command == "shell":
 		send(command)
 		shell_serveur()
+	
+	print(listen())
+
+	
   
   
   

