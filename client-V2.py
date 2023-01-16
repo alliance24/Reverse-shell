@@ -34,7 +34,8 @@ while True:
     if not commande_data:
         break
     
-    commande = commande_data.decode('ascii', errors='ignore')
+    
+    commande = commande_data.decode()
     print("Commande : ", commande)
     
     commande_split = commande.split(" ")
@@ -82,11 +83,11 @@ while True:
     # ------------------------------------------------------------------------------
     # [commande, filename, data]
     elif len(commande_split) > 1 and commande_split[0] == "upload":
-        f = open(commande_split[1], "wb")
+        f = open(commande_split[1], "w")
         data_file = ""
         for i in range(2, len(commande_split)):
             data_file = data_file + " " + commande_split[i]
-        f.write(data_file.encode('ascii', errors='ignore'))
+        f.write(data_file)
         f.close()
         reponse = "Fichier uploadé.".encode('ascii', errors='ignore')
     # ------------------------------------------------------------------------------ 

