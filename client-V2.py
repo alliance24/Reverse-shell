@@ -16,6 +16,8 @@ LISTE_COMMANDES = """
 
 """
 
+
+
 print(f"Connexion au serveur {HOST_IP}, port {HOST_PORT}")
 while True:
     try:
@@ -33,7 +35,7 @@ while True:
     commande_data = s.recv(MAX_DATA_SIZE)
     if not commande_data:
         break
-    
+
     
     commande = commande_data.decode()
     print("Commande : ", commande)
@@ -83,10 +85,9 @@ while True:
     # ------------------------------------------------------------------------------
     # [commande, filename, data]
     elif len(commande_split) > 1 and commande_split[0] == "upload":
-        f = open(commande_split[1], "w")
-        data_file = ""
-        for i in range(2, len(commande_split)):
-            data_file = data_file + " " + commande_split[i]
+        up_filename = commande_split[1]
+        f = open(commande_split[1], "wb")
+        data_file = commande_split[2].encode()
         f.write(data_file)
         f.close()
         reponse = "Fichier uploadé.".encode('ascii', errors='ignore')
