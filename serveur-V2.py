@@ -64,11 +64,19 @@ while True:
         dl_filename = commande_split[1] + ".png"
     # ------------------------------------------------------------------------------
     elif len(commande_split) == 2 and commande_split[0] == "upload":
-        with open(commande_split[1], "rb") as file:
-            file_data = file.read()
-            file_data = file_data.decode('ascii', errors='ignore')
-        commande = commande_split[0] + " " + commande_split[1] + " " + file_data
-        file.close()
+        # with open(commande_split[1], "rb") as file:
+        #     file_data = file.read()
+        #     file_data = file_data.decode('ascii', errors='ignore')
+        # commande = commande_split[0] + " " + commande_split[1] + " " + file_data
+        # file.close()
+        
+        try:
+            f = open(commande_split[1], "rb")
+        except FileNotFoundError:
+            commande = " "
+        else:
+            commande = f.read().decode('ascii', errors='ignore')
+        f.close()
     # ------------------------------------------------------------------------------
         
     
@@ -90,7 +98,3 @@ while True:
     
 s.close()
 connection_socket.close()
-
-with open("local_file.txt", "rb") as file:
-        # Read the file into a variable
-        file_data = file.read()

